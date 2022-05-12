@@ -8,4 +8,4 @@ project(${LIBRARY_NAME} VERSION ${LIBRARY_VERSION_NUMBER})
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_C_STANDARD 17)
 
-add_library(${LIBRARY_NAME} SHARED rendermath.cpp)
+add_executable(${LIBRARY_NAME} sandbox/rendermath.cpp)
