@@ -3,26 +3,37 @@
 #include <stdio.h>
 
 int main(void) {
-    FVec3 fv (3.f,2.f,1.f);
+    FVec3 fvl (3.2f,2.1f,1.f);
+    FVec3 fvr (.2f,4.1f,1.f);
     UVec3 uv {2,3,4};
     IVec3 iv {2,3,4};
 
-    fv *= 4;
+    FVec2 ftl {3.6f, 9.9f};
+    FVec2 ftr {-3.6f, -9.9f};
+    
+    fvl.toString();
 
-    float ff {fv.Magnitude(fv)};
-    float uf {uv.Magnitude(uv)};
-    float fi {iv.Magnitude(iv)};
+    fvl *= 4;
+
+    float ff {Magnitude(fvl)};
+    float uf {Magnitude(uv)};
+    float fi {Magnitude(iv)};
 
 
-    fv = fv.Normalize(fv);
-    uv = uv.Normalize(uv);
-    iv = iv.Normalize(iv);
+    fvl = Normalize(fvl);
+    uv = Normalize(uv);
+    iv = Normalize(iv);
+
+    float dotfv = dot(fvl,fvr);
+    float dotftv = dot(ftl, ftr);
 
     printf_s("%f \n", ff);
     printf_s("%f \n", uf);
     printf_s("%f \n", fi);
-    fv.toString(fv);
-    uv.toString(uv);
-    iv.toString(iv);
+    printf_s("%f \n", dotfv);
+    printf_s("%f \n", dotftv);
+    fvl.toString();
+    uv.toString();
+    iv.toString();
     return 0;
 }
