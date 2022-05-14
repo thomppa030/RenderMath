@@ -1,4 +1,4 @@
-#include "../Include/vector3.h"
-#include "../Include/vector2.h"
+#include "vector3.h"
+#include "vector2.h"
 
 
