@@ -2,7 +2,6 @@
 #include "math.h"
 
 // TODO: Make Define Header for RenderMath
-
 template <typename T> struct TVec3 {
   union {
     struct {
@@ -19,9 +18,9 @@ template <typename T> struct TVec3 {
 
   /**
    * @brief Overload the bracket operator to allow access to the Components
-   * 
+   *
    * @param i The index to be accessed
-   * @return * Overload& 
+   * @return * Overload&
    */
   T &operator[](int i) { return ((&x)[i]); }
 
@@ -48,9 +47,6 @@ template <typename T> struct TVec3 {
    * @param v The vector3 to multiply with
    * @return A copy of the resulting vector
    */
-  TVec3<T> &operator*=(TVec3<T> &v) {
-    return TVec3<T>{this.x * v.x, this.y * v.y, this.z * v.z};
-  }
 
   /**
    * @brief Divides One over a Scalar vector and then multiplies every Element
@@ -126,26 +122,74 @@ template <typename T> inline float Magnitude(TVec3<T> v) {
 }
 
 /**
- * @brief Returns a normalized version of the supplied Vector
- *
- * @return A Normalized version of the supplied vector
- */
-template <typename T> inline TVec3<T> Normalize(TVec3<T> v) {
-  return (v / Magnitude(v));
-}
-
-/**
- * @brief Returns the Dot Product of Two Vectors  
- * - If positive the vectors point in the same direction  
- * - If negative the vectors point in the opposite direction  
+ * @brief Returns the Dot Product of Two Vectors
+ * - If positive the vectors point in the same direction
+ * - If negative the vectors point in the opposite direction
  * - If Zero the vectors are perpendicular
- * 
- * @tparam T VectorType 
+ *
+ * @tparam T VectorType
  * @param l Vector 1
  * @param r Vector 2
  * @return returns the dot Product of two Vectors
  */
 template <typename T> inline float dot(const TVec3<T> &l, const TVec3<T> &r) {
-    return l.x * r.x + l.y * r.y + l.z * r.z;
+  return l.x * r.x + l.y * r.y + l.z * r.z;
 }
 
+/**
+ * @brief Get the square length of a Vector
+ *
+ * @param v The Vector to get the length of
+ * @return the square length of the given Vector
+ */
+template <typename T> inline float GetLengthSquare(const TVec3<T> &v) {
+  return v.x * v.x + v.y * v.y + v.z * v.z;
+}
+
+/**
+ * @brief      returns the Length of a given Vector
+ *
+ * @param      v     The vector to calculate the length of
+ *
+ * @tparam     T     { description }
+ *
+ * @return     the length of the given Vector
+ */
+template <typename T> inline float GetLength(const TVec3<T> &v) {
+  float sqLen = v.x * v.x + v.y * v.y + v.z * v.z;
+  if (sqLen < VEC_EPSILON) {
+    return 0.0f;
+  }
+  return sqrtf(sqLen);
+}
+
+/**
+ * @brief Returns a normalized version of the supplied Vector
+ *
+ * @return A Normalized version of the supplied vector
+ */
+template <typename T> inline void normalize(TVec3<T> &v) {
+  float lenSq = pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2);
+  if (lenSq < VEC_EPSILON) {
+    return;
+  }
+  float invLen = 1.0f / sqrtf(lenSq);
+  v.x *= invLen;
+  v.y *= invLen;
+  v.z *= invLen;
+}
+
+/**
+ * @brief Returns a normalized Vector
+ *
+ * @param v a Vector to get a normalize
+ * @return returns a copy of the normalized Vector
+ */
+template <typename T> inline TVec3<T> normalized(const TVec3<T> &v) {
+  float lenSq = GetLengthSquare(v);
+  if (lenSq < VEC_EPSILON) {
+    return v;
+  }
+  float invLength = 1.0f / sqrtf(lenSq);
+  return TVec3<T>(v.x * invLength, v.y * invLength, v.z * invLength);
+}
