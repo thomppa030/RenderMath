@@ -1,4 +1,5 @@
 #include "rendermath.h"
+#include "config.hpp"
 
 #include <stdio.h>
 
@@ -35,5 +36,8 @@ int main(void) {
     fvl.toString();
     uv.toString();
     iv.toString();
+
+    std::cout << project_name << " " << project_version << std::endl;
+
     return 0;
 }
